@@ -7,17 +7,25 @@ function App() {
   const [notes, setNotes] = useState([]);
   const [newNote, setNewNote] = useState({ title: '', content: '' });
   const [editingNote, setEditingNote] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     fetchNotes();
   }, []);
 
   const fetchNotes = async () => {
+    setLoading(true);
     try {
-      const response = await axios.get('https://notes-app-backend-dmnm.onrender.com');
-      setNotes(response.data);
+      const response = await axios.get('https://notes-app-backend-dmnm.onrender.com/notes');
+      setNotes(response.data || []);
+      setError(null);
     } catch (error) {
-      console.error('Error fetching notes:', error);
+      console.error('Error fetching notes:', error.message, error.response?.status, error.response?.data);
+      setError('Failed to fetch notes. Please try again.');
+      setNotes([]);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -29,12 +37,17 @@ function App() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!newNote.title || !newNote.content) return;
+    setLoading(true);
     try {
-      await axios.post('https://notes-app-backend-dmnm.onrender.com', newNote);
+      await axios.post('https://notes-app-backend-dmnm.onrender.com/notes', newNote);
       setNewNote({ title: '', content: '' });
       fetchNotes();
+      setError(null);
     } catch (error) {
       console.error('Error adding note:', error);
+      setError('Failed to add note. Please try again.');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -49,27 +62,39 @@ function App() {
 
   const handleEditSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
-      await axios.put(`https://notes-app-backend-dmnm.onrender.com/${editingNote.id}`, editingNote);
+      await axios.put(`https://notes-app-backend-dmnm.onrender.com/notes/${editingNote.id}`, editingNote);
       setEditingNote(null);
       fetchNotes();
+      setError(null);
     } catch (error) {
       console.error('Error updating note:', error);
+      setError('Failed to update note. Please try again.');
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleDelete = async (id) => {
+    setLoading(true);
     try {
-      await axios.delete(`https://notes-app-backend-dmnm.onrender.com/${id}`);
+      await axios.delete(`https://notes-app-backend-dmnm.onrender.com/notes/${id}`);
       fetchNotes();
+      setError(null);
     } catch (error) {
       console.error('Error deleting note:', error);
+      setError('Failed to delete note. Please try again.');
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <div className="App">
       <h1>Notes App</h1>
+      {loading && <p>Loading...</p>}
+      {error && <p style={{ color: 'red' }}>{error}</p>}
       <div>
         <h2>Add Note</h2>
         <form onSubmit={handleSubmit}>

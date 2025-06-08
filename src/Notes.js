@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Notes = ({ notes, onEdit, onDelete }) => {
+const Notes = ({ notes = [], onEdit, onDelete }) => { // Default to empty array
   return (
     <div>
       <h2>Notes List</h2>
