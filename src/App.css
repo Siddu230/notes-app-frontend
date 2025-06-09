@@ -1,46 +1,222 @@
-.App {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
+/* Import Google Fonts for modern typography */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+/* Reset default styles and set global styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
 }
 
-h1, h2 {
+/* Main app container */
+.App {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 20px;
+  background-color: #f7f9fc;
+  border-radius: 15px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  min-height: 80vh;
+}
+
+/* Header styling */
+.App h1 {
   text-align: center;
+  color: #2c3e50;
+  margin-bottom: 30px;
+  font-size: 2.5rem;
+  font-weight: 600;
+}
+
+/* Loading and error messages */
+.App p {
+  text-align: center;
+  margin: 10px 0;
+  font-size: 1rem;
+}
+
+.App p[style*="color: red"] {
+  color: #e74c3c;
+  font-weight: 400;
+}
+
+/* Form sections (Add Note and Edit Note) */
+.App h2 {
+  color: #34495e;
+  margin-bottom: 15px;
+  font-size: 1.5rem;
+  font-weight: 600;
 }
 
 form {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 20px;
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  margin-bottom: 30px;
 }
 
-input, textarea {
-  margin: 10px 0;
+input[type="text"],
+textarea {
+  width: 100%;
   padding: 10px;
-  font-size: 16px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+input[type="text"]:focus,
+textarea:focus {
+  outline: none;
+  border-color: #3498db;
+  box-shadow: 0 0 5px rgba(52, 152, 219, 0.3);
+}
+
+textarea {
+  min-height: 100px;
+  resize: vertical;
 }
 
 button {
-  padding: 10px;
-  margin: 5px;
-  background-color: #007bff;
-  color: white;
+  padding: 10px 20px;
   border: none;
+  border-radius: 5px;
+  font-size: 1rem;
   cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.1s ease;
 }
 
-button:hover {
-  background-color: #0056b3;
+/* Add Note button */
+form button[type="submit"] {
+  background-color: #3498db;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+form button[type="submit"]:hover {
+  background-color: #2980b9;
+  transform: translateY(-2px);
+}
+
+/* Cancel button in Edit form */
+form button[type="button"] {
+  background-color: #e74c3c;
+  color: #ffffff;
+  margin-left: 10px;
+}
+
+form button[type="button"]:hover {
+  background-color: #c0392b;
+  transform: translateY(-2px);
+}
+
+/* Notes List section */
+.Notes h2 {
+  color: #34495e;
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.Notes p {
+  color: #7f8c8d;
+  text-align: center;
+  font-size: 1rem;
 }
 
 ul {
   list-style: none;
-  padding: 0;
 }
 
 li {
-  border: 1px solid #ddd;
-  padding: 10px;
-  margin: 10px 0;
-  border-radius: 5px;
+  background-color: #ffffff;
+  padding: 20px;
+  margin-bottom: 15px;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease;
+}
+
+li:hover {
+  transform: translateY(-3px);
+}
+
+li h3 {
+  color: #2c3e50;
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+li p {
+  color: #7f8c8d;
+  font-size: 1rem;
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+/* Edit and Delete buttons in the notes list */
+li button {
+  margin-right: 10px;
+  padding: 8px 15px;
+}
+
+li button:first-child { /* Edit button */
+  background-color: #2ecc71;
+  color: #ffffff;
+}
+
+li button:first-child:hover {
+  background-color: #27ae60;
+  transform: translateY(-2px);
+}
+
+li button:last-child { /* Delete button */
+  background-color: #e74c3c;
+  color: #ffffff;
+}
+
+li button:last-child:hover {
+  background-color: #c0392b;
+  transform: translateY(-2px);
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+  .App {
+    margin: 20px;
+    padding: 15px;
+  }
+
+  .App h1 {
+    font-size: 2rem;
+  }
+
+  form {
+    padding: 15px;
+  }
+
+  input[type="text"],
+  textarea {
+    font-size: 0.9rem;
+  }
+
+  button {
+    font-size: 0.9rem;
+    padding: 8px 15px;
+  }
+
+  li {
+    padding: 15px;
+  }
+
+  li h3 {
+    font-size: 1rem;
+  }
+
+  li p {
+    font-size: 0.9rem;
+  }
 }
